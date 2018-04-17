@@ -118,7 +118,7 @@
 				if (typeof plugin_config.oauth === 'undefined' || plugin_config.oauth === "") {
 					console.warn("TAPIC is using default oauth value!");
 					// default hardcoded oauth value - do not change!
-					plugin_config.oauth = "71g7xd68c55kb05rvzhbtt2fvey16i";
+					plugin_config.oauth = "q9ao27vkiwsghiaowk5j5mnblvso8r";
 				}
 				TAPIC.setup(plugin_config.oauth, function() {
 					TAPIC.setRefreshRate(10);
