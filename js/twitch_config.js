@@ -118,16 +118,6 @@
 					}
 					channelInput.value = configObj.json;
 					enableChannelConfig();
-
-					/*
-					 * use setTimeout as a work-around for bug:
-					 * eventlisteners added below still are somewhat triggered
-					 * by above loading of settings
-					 * (maybe due to bubbling/propagation, for further investigation)
-					 */
-					setTimeout(function(){
-						addComponentEventListeners();
-					}, 0);
 				});
 			};
 
