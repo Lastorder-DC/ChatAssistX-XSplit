@@ -8,14 +8,14 @@
   <CanStepForward>false</CanStepForward>
   <CanStop>false</CanStop>
   <CanCustomizeCSS>false</CanCustomizeCSS>
-  <CanSetResolution>false</CanSetResolution>
+  <CanSetResolution>true</CanSetResolution>
   <Description />
   <HelpLink />
   <HelpText>
   </HelpText>
-  <Name>twitchchathtml5</Name>
+  <Name>chatassistx</Name>
   <param name="flashvars" value="" />
-  <ProperName>Twitch Chat Viewer via HTML 5</ProperName>
+  <ProperName>ChatAssistX for XSplit</ProperName>
   <UseEmbeddedConfig>true</UseEmbeddedConfig>
   <ShowConfigOnAdd>false</ShowConfigOnAdd>
   <ShowModalConfig>false</ShowModalConfig>

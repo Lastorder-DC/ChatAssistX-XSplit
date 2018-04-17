@@ -1,30 +1,112 @@
-<!--
-/**
-*
-* Copyright (c) 2009-2015 SplitmediaLabs Limited, All rights reserved.
-* <licenseinfo@splitmediaLabs.com>
-*   
-* This file is distributed only as part of SplitmediaLabs Limited's software development toolkits.
-*
-* Please be aware that the content of this file is considered confidential in nature and may not be distributed to any third party.
-* You may only use this file subject to direct and explicit grant of rights by SplitmediaLabs Limited, either by written license agreement or written permission.
-* You may use this file in its original or modified form solely for the purpose, and subject to the terms, stipulated by the license agreement or permission.
-*
-* Please delete all traces of the file from your system and notify SplitmediaLabs Limited immediately.
-*
-*/
--->
-<!DOCTYPE html>
 <html>
-	<head>
-		<title>Twitch Chat Viewer via HTML5</title>
-        <meta charset='utf-8' />
-		<meta name="xsplit:config-url" content="index_config.html">
-        <link rel="stylesheet" href="css/twitch_chat.css" />
-	</head>
-	<body mode="standby">
-		<div id="standby"></div>
-		<script id="xjsInject" src="js/xjs.js" ></script>
-		<script src="js/twitch.js"></script>
-	</body>
+<head>
+	<meta charset="utf-8" />
+	<title>ChatAssistX for XSplit</title>
+	<script id="xjsInject" src="js/xjs.js"></script>
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="css/jquery-ui.min.css" defcss="true" />
+	<script src="js/handlebars-v4.0.11.js"></script>
+	<script src="js/tapic.min.js"></script>
+	<script src="js/referrer-killer.js"></script>
+	<script src="js/alertify.min.js"></script>
+	<script src="//cdn.rawgit.com/Lastorder-DC/ChatAssistX-Client/2.0.1/js/chatassistx/chat-loader.js"></script>
+	<link rel="stylesheet" href="css/alertify.min.css" defcss="true"/>
+	<link rel="stylesheet" href="css/alertify-default.min.css" defcss="true"/>
+	<link rel="stylesheet" href="//cdn.rawgit.com/Lastorder-DC/ChatAssistX-Client/2.0.1/ChatAssistX/jsassist.css" type="text/css" defcss="true" />
+	<link rel="stylesheet" href="//cdn.rawgit.com/Lastorder-DC/ChatAssistX-Client/2.0.1/ChatAssistX/chatassist.css" type="text/css" defcss="true" />
+
+	<script>
+		(function(window) {
+            var xjs = require('xjs');
+            var Item = xjs.Item;
+            var configObj = {};
+            var myItem;
+            var sourceWindow
+
+            xjs.ready()
+                .then(function () {
+                    alertify.set('notifier','position', 'top-center');
+                    sourceWindow = xjs.SourcePluginWindow.getInstance();
+                    return Item.getItemList()
+                })
+                .then(function(item) {
+                    myItem = item[0];
+                    listenOnSave()
+                    return myItem.getName();
+                })
+                .then(function(name) {
+                    // change the property name if just added
+                    var newName = 'ChatAssistX for XSplit';
+                    if (name.toLowerCase().substring(0, newName.length) !== newName.toLowerCase()) {
+                        return myItem.setName('ChatAssistX for XSplit');
+                    }
+                    else {
+                        return myItem.setName(name);
+                    }
+                })
+                .then(function() {
+                    return myItem.loadConfig();
+                })
+                .then(function(config) {
+                    configObj = config;
+                    // redirect to twitch pop-out if a channel has been set
+                    if (configObj.hasOwnProperty('json') && configObj.json !== '') {
+                        window.ChatAssistX.init(configObj.json);
+                    } else {
+                        document.write("Please add config.json link!");
+					}
+                });
+
+            // redirect from initial UI into twitch popout if channel is set
+            var listenOnSave = function () {
+                sourceWindow.on('save-config', function (config) {
+                    configObj = config;
+                    myItem.saveConfig(configObj).then(function () {
+                        if (configObj.hasOwnProperty('channel') && configObj.channel !== '') {
+                            myItem.setName('ChatAssistX for XSplit (' + configObj.channel + ')')
+								.then(function () {
+									location.reload();
+								});
+                        }
+                    });
+                });
+            };
+		})(window);
+	</script>
+</head>
+<body>
+	<script id="chat-template" type="text/x-handlebars-template">
+		<div class="chat_div" id="chat_{{num}}">
+			<span class="chat_platform_{{platform}}"></span>
+			<span class="chat_text_nickname">
+				{{{nickname}}}
+			</span>
+			<div class="chat_text_message">
+				{{{message}}}
+			</div>
+		</div>
+	</script>
+	<script id="chat-template-sticky" type="text/x-handlebars-template">
+		<div class="fixed_chat">
+			{{#ifCond nickname notitle}}
+			<div class="chat_text_message_sticky_logo">
+				{{{message}}}
+			</div>
+			{{else}}
+			<span class="chat_platform_{{platform}}"></span>
+			<span class="chat_text_nickname">
+				{{{nickname}}}
+			</span>
+			<div class="chat_text_message_sticky">
+				{{{message}}}
+			</div>
+			{{/ifCond}}
+		</div>
+	</script>
+	<div class="chat_wrapper">
+		<div class="chat_container">
+		</div>
+	</div>
+</body>
 </html>
