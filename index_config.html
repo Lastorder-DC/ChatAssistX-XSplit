@@ -16,42 +16,71 @@
 -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>ChatAssistX 설정</title>
-		<script src="ui-components/webcomponentsjs/webcomponents.js"></script>
-		<link rel="import" href="ui-components/polymer.html" />
+<head>
+    <title>ChatAssistX 설정</title>
+    <script src="ui-components/webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="ui-components/polymer.html" />
 
-		<!-- XUI Polymer Components -->
-		<link rel="import" href="./ui-components/components/button/button.html" />
-		<link rel="import" href="./ui-components/components/input/input.html" />
-		<link rel="import" href="./ui-components/components/tab/tab.html" />
-		<link rel="import" href="./ui-components/components/dialog/dialog.html" />
-		<link rel="import" href="./ui-components/components/section/section.html" />
+    <!-- XUI Polymer Components -->
+    <link rel="import" href="./ui-components/components/button/button.html" />
+    <link rel="import" href="./ui-components/components/input/input.html" />
+    <link rel="import" href="./ui-components/components/tab/tab.html" />
+    <link rel="import" href="./ui-components/components/dialog/dialog.html" />
+    <link rel="import" href="./ui-components/components/section/section.html" />
 
-		<link rel="import" href="./ui-components/components/dropdown/dropdown.html" />
-		<link rel="import" href="./ui-components/components/colorpicker/colorpicker.html" />
-		<link rel="import" href="./ui-components/components/slider/slider.html" />
-		<link rel="import" href="./ui-components/components/volume_slider/volume_slider.html" />		
-        <link rel="stylesheet" href="./css/twitch_chat_config.css?2801" />
-    </head>
-    <body>
-		<div class="container">
-			<div id="source" class="subcon">
-				<span class="title" i18n="chat.source">설정</span>
-				<div class="box">
-					<div class="boxInner channelbox">
-						<div class="subtitle2 chbox" i18n="chat.channel_text" data-service="Twitch">설정 JSON 파일의 주소를 입력해주세요.</div>
-						<div class="channel chbox">
-							<span class="subtitle" i18n="chat.channel">JSON 주소</span>
-							<input name="channel" type="text" i18n-placeholder="chat.channel_name" placeholder="http://www.example.com/config.json" disabled>
-							<button name="connect" i18n="chat.connect" disabled>유효성 체크</button>
-						</div>
-						<div class="subtitle2 chbox error" name="error" i18n="chat.error_channel_not_found" data-service="Twitch">유효성 체크 실패!</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<script src="./js/xjs.js" ></script>
-		<script src="./js/twitch_config.js"></script>
-    </body>
+    <link rel="import" href="./ui-components/components/dropdown/dropdown.html" />
+    <link rel="import" href="./ui-components/components/colorpicker/colorpicker.html" />
+    <link rel="import" href="./ui-components/components/slider/slider.html" />
+    <link rel="import" href="./ui-components/components/volume_slider/volume_slider.html" />
+    <link rel="stylesheet" href="./css/twitch_chat_config.css?2801" />
+</head>
+<body>
+<div class="container">
+    <div id="source" class="subcon">
+        <span class="title" i18n="chat.source">기본 설정</span>
+        <div class="box">
+            <div class="boxInner channelbox">
+                <div class="subtitle2 chbox" i18n="chat.channel_text" data-service="Twitch">연동할 트위치 채널 아이디를 입력하세요.</div>
+                <div class="channel chbox">
+                    <span class="subtitle" i18n="chat.channel">채널</span>
+                    <input name="channel" type="text" i18n-placeholder="chat.channel_name" placeholder="트위치 아이디" disabled>
+                    <button name="connect" i18n="chat.connect" disabled>연결</button>
+                </div>
+                <div class="subtitle2 chbox error" name="error" i18n="chat.error_channel_not_found" data-service="Twitch">트위치 채널을 찾을 수 없습니다</div>
+            </div>
+        </div>
+    </div>
+    <div id="display" class="subcon display">
+        <span class="title" i18n="chat.display">기본 스타일</span>
+        <div class="box">
+            <div class="boxInner">
+                <label i18n="chat.nickname">닉네임 색깔</label>
+                <xui-colorpicker name="nicknameColor"></xui-colorpicker>
+                <label i18n="chat.message">채팅 색깔</label>
+                <xui-colorpicker name="messageColor"></xui-colorpicker>
+                <label i18n="chat.background">배경 색깔</label>
+                <xui-colorpicker name="backgroundColor"></xui-colorpicker>
+                <br>
+                <label class="opacity" i18n="chat.opacity">채팅 투명도</label>
+                <xui-slider name="opacity"></xui-slider>
+                <label class="opacity" i18n="chat.background_opacity">배경 투명도</label>
+                <xui-slider name="background_opacity"></xui-slider>
+                <br>
+                <label i18n="chat.background">채팅 폰트</label>
+                <xui-dropdown name="fontMessage"></xui-dropdown>
+                <br>
+                <label i18n="chat.text_size">채팅 크기</label>
+                <xui-input type="number" name="text_size" textAlign="right" min="8" max="200" value = "13"></xui-input>
+                <label>px</label>
+                <br>
+                <label i18n="chat.fadeout_time">페이드아웃 시간</label>
+                <xui-input type="number" name="fadeout" textAlign="right" min="8" max="200" value = "13"></xui-input>
+                <label>초</label>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./js/xjs.js" ></script>
+<script src="./js/twitch_config.js"></script>
+</body>
 </html>
