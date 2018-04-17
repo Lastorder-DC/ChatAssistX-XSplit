@@ -25,7 +25,6 @@
 
 			var display = document.getElementById('display');
 			var channelInput = document.getElementsByName('channel')[0];
-			var displayBox = display.querySelector('.box');
 
 			document.onselectstart = function(event)
 			{
@@ -102,8 +101,7 @@
 			/* WINDOW RELATED FUNCTIONS */
 			var resizeDisplaySection = function()
 			{
-				var newHeight = window.innerHeight - parseInt(displayBox.getBoundingClientRect().top) - parseInt(window.getComputedStyle(display,null).getPropertyValue('padding-bottom'));
-				displayBox.style.height = newHeight + 'px';
+				return;
 			};
 
 			var getSettings = function()
